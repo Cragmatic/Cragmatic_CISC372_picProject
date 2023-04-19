@@ -163,8 +163,8 @@ int main(int argc,char** argv){
     destImage.data=malloc(sizeof(uint8_t)*destImage.width*destImage.bpp*destImage.height);
 
     long t1,t2;
-    t1=time(NULL);
     clock_t start, end;
+    t1=time(NULL);
     start = clock();
  
     //convolute(&srcImage,&destImage,algorithms[type]);
