@@ -11,7 +11,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 
-int thread_count = 128;
+long thread_count;
 long long block_size;
 long leftover;
 ConvoluteThreadArgs sharedArgs;
@@ -123,7 +123,7 @@ void* thread_convolute(void* rank) {
 //Usage: Prints usage information for the program
 //Returns: -1
 int Usage(){
-    printf("Usage: image <filename> <type>\n\twhere type is one of (edge,sharpen,blur,gauss,emboss,identity)\n");
+    printf("Usage: image <filename> <type> <num_threads> \n\twhere type is one of (edge,sharpen,blur,gauss,emboss,identity)\n");
     return -1;
 }
 
@@ -143,8 +143,11 @@ enum KernelTypes GetKernelType(char* type){
 //argv is expected to take 2 arguments.  First is the source file name (can be jpg, png, bmp, tga).  Second is the lower case name of the algorithm.
 int main(int argc,char** argv){
 
+    long t1,t2;
+    t1=time(NULL);
+
     stbi_set_flip_vertically_on_load(0); 
-    if (argc!=3) return Usage();
+    if (argc!=4) return Usage();
     char* fileName=argv[1];
     if (!strcmp(argv[1],"pic4.jpg")&&!strcmp(argv[2],"gauss")){
         printf("You have applied a gaussian filter to Gauss which has caused a tear in the time-space continum.\n");
@@ -168,6 +171,7 @@ int main(int argc,char** argv){
     start = clock();
  
     //convolute(&srcImage,&destImage,algorithms[type]);
+    thread_count = strtol(argv[3], NULL, 10);
     sharedArgs.srcImage = &srcImage;
     sharedArgs.destImage = &destImage;
     sharedArgs.type = type;
@@ -183,14 +187,11 @@ int main(int argc,char** argv){
     for (long thread=0; thread<thread_count; thread++) {
         pthread_join(thread_handles[thread], NULL);
     }
-    t2=time(NULL);
-    end = clock();
-    printf("Took %ld seconds\n",t2-t1);
-    double time_taken = (double) (end - start) / (double) CLOCKS_PER_SEC;
-    printf("Actually took %f seconds \n", time_taken);
     stbi_write_png("output.png",destImage.width,destImage.height,destImage.bpp,destImage.data,destImage.bpp*destImage.width);
     stbi_image_free(srcImage.data);
     
     free(destImage.data);
+    t2=time(NULL);
+    printf("Took %ld seconds\n",t2-t1);
    return 0;
 }
