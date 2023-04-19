@@ -3,6 +3,7 @@
 #include <time.h>
 #include <string.h>
 #include "image.h"
+#include <omp.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -60,9 +61,9 @@ void convolute(Image* srcImage,Image* destImage,Matrix algorithm){
     int row,pix,bit,span;
     span=srcImage->bpp*srcImage->bpp;
     #pragma omp parallel for collapse(3)
-    printf("threadId = %d \n", omp_get_thread_num());
     for (row=0;row<srcImage->height;row++){
         for (pix=0;pix<srcImage->width;pix++){
+            printf("row: %d, col: %d threadId = %d \n", row, pix, omp_get_thread_num());
             for (bit=0;bit<srcImage->bpp;bit++){
                 destImage->data[Index(pix,row,srcImage->width,bit,srcImage->bpp)]=getPixelValue(srcImage,pix,row,bit,algorithm);
             }
