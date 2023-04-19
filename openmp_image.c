@@ -65,9 +65,6 @@ void convolute(Image* srcImage,Image* destImage,Matrix algorithm){
         for (pix=0;pix<srcImage->width;pix++){
             for (bit=0;bit<srcImage->bpp;bit++){
                 destImage->data[Index(pix,row,srcImage->width,bit,srcImage->bpp)]=getPixelValue(srcImage,pix,row,bit,algorithm);
-                if(bit == 0) {
-                    printf("row: %d, col: %d threadId = %d \n", row, pix, omp_get_thread_num());
-                }
             }
         }
     }
