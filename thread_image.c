@@ -164,11 +164,6 @@ int main(int argc,char** argv){
     destImage.height=srcImage.height;
     destImage.width=srcImage.width;
     destImage.data=malloc(sizeof(uint8_t)*destImage.width*destImage.bpp*destImage.height);
-
-    long t1,t2;
-    clock_t start, end;
-    t1=time(NULL);
-    start = clock();
  
     //convolute(&srcImage,&destImage,algorithms[type]);
     thread_count = strtol(argv[3], NULL, 10);
