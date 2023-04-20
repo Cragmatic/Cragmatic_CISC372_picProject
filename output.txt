@@ -1,0 +1,15 @@
+Script started on Wed Apr 19 22:07:08 2023
+]0;cjbarber@r1n00.darwin:~/Cragmatic_CISC372_picProject[?1034h[cjbarber@r1n00 Cragmatic_CISC372_picProject]$ srun im    image     thread_image pic1.jpg edge
+Usage: image <filename> <type> <num_threads> 
+	where type is one of (edge,sharpen,blur,gauss,emboss,identity)
+srun: error: r1n00: task 0: Exited with exit code 255
+]0;cjbarber@r1n00.darwin:~/Cragmatic_CISC372_picProject[cjbarber@r1n00 Cragmatic_CISC372_picProject]$ srun thread_image pic1.jpg edge 1 0 [A[cjbarber@r1n00 Cragmatic_CISC372_picProject]$ srun thread_image pic1.jpg edge 1 [K[A[cjbarber@r1n00 Cragmatic_CISC372_picProject]$ srun thread_image pic1.jpg edge [K
+[K[A[cjbarber@r1n00 Cragmatic_CISC372_picProject]$ srun thread_image pic1.jpg edge 1 00  [A[cjbarber@r1n00 Cragmatic_CISC372_picProject]$ srun thread_image pic1.jpg edge 1 [K[A[cjbarber@r1n00 Cragmatic_CISC372_picProject]$ srun thread_image pic1.jpg edge [K
+[K[A[cjbarber@r1n00 Cragmatic_CISC372_picProject]$ srun thread_image pic1.jpg edge 6 4
+Took 6 seconds
+]0;cjbarber@r1n00.darwin:~/Cragmatic_CISC372_picProject[cjbarber@r1n00 Cragmatic_CISC372_picProject]$ srun      srun openmp_image pic1.jpg edge
+Took 6 seconds
+]0;cjbarber@r1n00.darwin:~/Cragmatic_CISC372_picProject[cjbarber@r1n00 Cragmatic_CISC372_picProject]$ exit
+exit
+
+Script done on Wed Apr 19 22:08:21 2023
